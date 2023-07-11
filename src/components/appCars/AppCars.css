@@ -1,0 +1,44 @@
+.cars-container {
+    padding: 1rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 1rem;
+}
+
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    background: #343a40;
+    transition: all .2s ease-in-out;
+}
+
+.card:hover {
+    background: #00299b;
+}
+
+.card__image {
+    width: 100%;
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card__image img {
+    width: 100%;
+}
+
+.card__footer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card__footer h3 {
+    color: #eeeeee;
+    padding: 1rem;
+}
