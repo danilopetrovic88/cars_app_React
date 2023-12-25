@@ -16,8 +16,8 @@ export const getSingleCar = async (carId) => {
     return data;
 }
 
-export const addNewCar = async (carData) => {
-    const data = await api.post(endpoints.cars, carData)
+export const deleteCar = async (carId) => {
+    const data = await api.delete(endpoints.cars + `/${carId}`)
 
-    return data;
+    return data
 }

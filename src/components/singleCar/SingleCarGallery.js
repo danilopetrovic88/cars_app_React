@@ -21,7 +21,7 @@ const SingleCarGallery = () => {
         getCar();
     }, [carId])
 
-    if(!localStorage.getItem("user")) navigate("/login")
+    // if(!localStorage.getItem("user")) navigate("/login")
 
   return (
     <>
@@ -30,7 +30,7 @@ const SingleCarGallery = () => {
   {
     car.images && car.images.map((image, index) => (
         <div class="card">
-            <img src={image.url} />
+            <img src={`http://localhost:8000/` + image.path} />
         <div class="card__head">
             {
                 car.brand + " " + car.model

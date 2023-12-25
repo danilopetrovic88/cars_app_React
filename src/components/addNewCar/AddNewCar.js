@@ -1,13 +1,20 @@
 import React, { useState } from 'react'
 import "./AddNewCar.css";
-import { addNewCar } from '../../services/carService';
 import { useNavigate } from 'react-router';
+import { addNewCarService } from '../../services/addNewCarService';
 
 const AddNewCar = ({ activeUser }) => {
   const fuelOptions = ["","petrol", "diesel", "electric", "gas", "other"];
-  const years = [];
+  const years = [""];
   const doors = ["", 3, 4, 5];
   const transmitions = ["", "Manual 4 gears", "Manual 5 gears", "Manual 6 gears", "Authomatic", "Semi-authomatic"];
+  const car_body = ["", "Limuzina", "Hečbek", "Karavan", "Kupe", "Kabriolet/Roadster", "Monovolumen (MiniVan)", "Džip/SUV", "Pick up"];
+  const replacement = ["", "Bez zamene", "Zamena za jeftinije", "U istoj ceni", "Zamena za skuplje", "Svejedno"];
+  const drive = ["", "Prednji", "Zadnji", "4x4"];
+  const seats = ["", "2 sedišta", "3 sedišta", "4 sedišta", "5 sedišta", "6 sedišta", "7 sedišta", "8 sedišta", "9 sedišta"];
+  const wheel_side = ["", "Levi volan", "Desni volan"];
+  const climatronic_options = ["", "Nema klime", "Manualna klima", "Automatska klima"];
+  const colors = ["", "Bela", "Bež", "Bordo", "Braon", "Crna", "Crvena", "Kameleon", "Krem", "Ljubičasta", "Narandžasta", "Plava", "Siva", "Smeđa", "Srebrna", "Tirkiz", "Teget", "Zelena", "Zlatna", "Žuta"];
 
   for (let i = 1975; i <= 2022; i++) {
     years.push(i);
@@ -19,48 +26,81 @@ const [newCar, setNewCar] = useState({
     brand : "",
     model: "",
     production_year: "",
-    country_of_origin: "",
+    car_body : "",
     fuel: "",
     number_of_doors: "",
-    engine: "",
+    price : "",
+    mileage : "",
+    replacement : "",
+    cubic_capacity : "",
+    drive : "",
     horse_power: "",
     transmition: "",
+    number_of_seats : "",
+    steering_wheel_side : "",
+    climatronic : "",
+    color : "",
+    registered_until : "",
+    security : [],
+    equipment : [],
     description: "",
-    images: [],
-    author : {}
+    author: "",
+    phone: "",
+    city: ""
 })
+
+const [carImages, setCarImages] = useState(null)
+
+const form = new FormData();
+
+const onInputChange = (e) => {
+  const arr = Array.from(e.target.files)
+    setCarImages(arr)
+}
+
+
 
 const handleSubmit = async (e) => {
   e.preventDefault();
+  
+  form.append("brand", newCar.brand);
+  form.append("model", newCar.model);
+  form.append("production_year", newCar.production_year);
+  form.append("car_body", newCar.car_body);
+  form.append("fuel", newCar.fuel);
+  form.append("number_of_doors", newCar.number_of_doors);
+  form.append("price", newCar.price);
+  form.append("mileage", newCar.mileage);
+  form.append("replacement", newCar.replacement);
+  form.append("cubic_capacity", newCar.cubic_capacity);
+  form.append("drive", newCar.drive);
+  form.append("horse_power", newCar.horse_power);
+  form.append("transmition", newCar.transmition);
+  form.append("number_of_seats", newCar.number_of_seats);
+  form.append("steering_wheel_side", newCar.steering_wheel_side);
+  form.append("climatronic", newCar.climatronic);
+  form.append("color", newCar.color);
+  form.append("registered_until", newCar.registered_until);
+  form.append("security", newCar.security);
+  form.append("equipment", newCar.equipment);
+  form.append("description", newCar.description);
+  form.append("author", activeUser.first_name);
+  form.append("phone", activeUser.phone);
+  form.append("city", activeUser.city);
+  form.append("author_id", activeUser._id);
 
-  const data = await addNewCar({
-    ...newCar,
-    author : {
-      _id: activeUser._id,
-      first_name: activeUser.first_name,
-      last_name: activeUser.last_name,
-      email: activeUser.email
+  if(carImages !== null) {
+    for (let i = 0; i < carImages.length; i++) {
+      const file = carImages[i];
+      form.append("images", file)
     }
-  });
+  }
+  
 
-  setNewCar({
-    brand : "",
-    model: "",
-    production_year: "",
-    country_of_origin: "",
-    fuel: "",
-    number_of_doors: "",
-    engine: "",
-    horse_power: "",
-    transmition: "",
-    description: "",
-    images: [],
-    author: {}
-  })
+  const data = await addNewCarService(form)
 
   navigate("/cars")
 }
-const [ input, setInput ] = useState([''])
 
 if(!localStorage.getItem("user")) navigate("/login")
 
@@ -70,33 +110,40 @@ if(!localStorage.getItem("user")) navigate("/login")
 		<input type="checkbox" id="chk" aria-hidden="true" />
 
 			<div className="add-car">
-				<form onSubmit={handleSubmit}>
-					{/* <h2 className='add-car-title'>Add new car</h2> */}
+				<form onSubmit={handleSubmit} encType='multipart/form-data'>
+                    <span className='input-label'>Marka: </span>
 					          <input 
                     type="text" 
                     name="brand" 
-                    placeholder="Brand" 
-                    required='' 
+                    placeholder="Marka" 
+                    required
                     className="input" 
                     onChange={({ target }) =>
                     setNewCar({ ...newCar, brand : target.value })
                     }
                     />
+                    {/* brand end */}
+
+                    {/* model start */}
+                    <span className='input-label'>Model: </span>
                     <input 
                     type="text" 
                     name="model" 
                     placeholder="Model" 
-                    required='' 
+                    required
                     className="input" 
                     onChange={({ target }) =>
                     setNewCar({ ...newCar, model : target.value })
                     }
                     />
-                    <span className='input-label'>Year: </span>
+                    {/* model end */}
+
+                    {/* year start */}
+                    <span className='input-label'>Godina proizvodnje: </span>
                     <select
                     className="input" 
+                    required
                     name='production_year'
-                    // value={newCar.year}
                     onChange={({ target }) =>
                     setNewCar({ ...newCar, production_year : target.value })
                     }
@@ -107,21 +154,78 @@ if(!localStorage.getItem("user")) navigate("/login")
                         ))
                       }
                     </select>
+                    {/* year end */}
+
+                    {/* car_body start */}
+                    <span className='input-label'>Karoserija: </span>
+                    <select
+                    className="input" 
+                    name='car_body'
+                    required
+                    onChange={({ target }) =>
+                    setNewCar({ ...newCar, car_body : target.value })
+                    }
+                    >
+                      {
+                        car_body.map((item,index) => (
+                          <option key={index} value={item}>{item}</option>
+                        ))
+                      }
+                    </select>
+                    {/* car_body end */}
+
+                    {/* price start */}
+                    <span className='input-label'>Cena: </span>
                     <input 
+                    required
                     type="text" 
-                    name="country_of_origin" 
-                    placeholder="Country of origin" 
-                    required='' 
+                    name="price" 
+                    placeholder="Cena"
                     className="input" 
                     onChange={({ target }) =>
-                    setNewCar({ ...newCar, country_of_origin : target.value })
+                    setNewCar({ ...newCar, price : target.value })
                     }
                     />
-                    <span className='input-label'>Fuel: </span>
+                    {/* price end */}
+
+                    {/* mileage start */}
+                    <span className='input-label'>Kilometraža: </span>
+                    <input 
+                    required
+                    type="text" 
+                    name="mileage" 
+                    placeholder="Kilometraža"
+                    className="input" 
+                    onChange={({ target }) =>
+                    setNewCar({ ...newCar, mileage : target.value })
+                    }
+                    />
+                    {/* mileage end */}
+
+                    {/* replacement start */}
+                    <span className='input-label'>Zamena: </span>
+                    <select
+                    required
+                    className="input" 
+                    name='replacement'
+                    onChange={({ target }) =>
+                    setNewCar({ ...newCar, replacement : target.value })
+                    }
+                    >
+                      {
+                        replacement.map((item,index) => (
+                          <option key={index} value={item}>{item}</option>
+                        ))
+                      }
+                    </select>
+                    {/* replacement end */}
+
+                    {/* fuel start */}
+                    <span className='input-label'>Vrsta goriva: </span>
                     <select
                     className="input" 
                     name='fuel'
-                    // value={newCar.fuel}
+                    required
                     onChange={({ target }) =>
                     setNewCar({ ...newCar, fuel : target.value })
                     }
@@ -132,21 +236,28 @@ if(!localStorage.getItem("user")) navigate("/login")
                         ))
                       }
                     </select>
+                    {/*  fuel end */}
+
+                    {/* cubic_capacity start */}
+                    <span className='input-label'>Kubikaža: </span>
                     <input 
                     type="text" 
-                    name="engine" 
-                    placeholder="Engine name" 
-                    required='' 
+                    name="cubic_capacity" 
+                    placeholder="Kubikaža" 
+                    required 
                     className="input" 
                     onChange={({ target }) =>
-                    setNewCar({ ...newCar, engine : target.value })
+                    setNewCar({ ...newCar, cubic_capacity : target.value })
                     }
                     />
-                    <span className='input-label'>Doors: </span>
+                    {/* cubic_capacity end */}
+
+                    {/* doors start */}
+                    <span className='input-label'>Broj vrata: </span>
                     <select
                     className="input" 
                     name='number_of_doors'
-                    // value={newCar.number_of_doors}
+                    required
                     onChange={({ target }) =>
                     setNewCar({ ...newCar, number_of_doors : target.value })
                     }
@@ -157,21 +268,46 @@ if(!localStorage.getItem("user")) navigate("/login")
                         ))
                       }
                     </select>
+                    {/* doors end */}
+
+                    {/* horse_power start */}
+                    <span className='input-label'>Konjske snage: </span>
                     <input 
                     type="text" 
                     name="horse_power" 
-                    placeholder="Horse power" 
-                    required='' 
+                    placeholder="Snaga motora(konjske snage)" 
+                    required
                     className="input" 
                     onChange={({ target }) =>
                     setNewCar({ ...newCar, horse_power : target.value })
                     }
                     />
-                    <span className='input-label'>Transmition: </span>
+                    {/* horse_power end */}
+
+                    {/* drive (pogon) start */}
+                    <span className='input-label'>Pogon: </span>
+                      <select
+                        className="input" 
+                        name='drive'
+                        required
+                        onChange={({ target }) =>
+                        setNewCar({ ...newCar, drive : target.value })
+                        }
+                        >
+                          {
+                            drive.map((item,index) => (
+                              <option key={index} value={item}>{item}</option>
+                            ))
+                          }
+                      </select>
+                    {/* drive (pogon) end */}
+
+                    {/* transmition start */}
+                    <span className='input-label'>Menjač: </span>
                     <select
                     className="input" 
                     name='transmition'
-                    // value={newCar.transmition}
+                    required
                     onChange={({ target }) =>
                     setNewCar({ ...newCar, transmition : target.value })
                     }
@@ -182,39 +318,120 @@ if(!localStorage.getItem("user")) navigate("/login")
                         ))
                       }
                     </select>
+                    {/* transmition end */}
+
+                    {/* number_of_seats start */}
+                    <span className='input-label'>Broj sedišta: </span>
+                    <select
+                    className="input" 
+                    name='number_of_seats'
+                    required
+                    onChange={({ target }) =>
+                    setNewCar({ ...newCar, number_of_seats : target.value })
+                    }
+                    >
+                      {
+                        seats.map((item,index) => (
+                          <option key={index} value={item}>{item}</option>
+                        ))
+                      }
+                    </select>
+                    {/* number_of_seats end end */}
+
+                    {/* steering_wheel_side start */}
+                    <span className='input-label'>Strana volana: </span>
+                    <select
+                    className="input" 
+                    name='steering_wheel_side'
+                    required
+                    onChange={({ target }) =>
+                    setNewCar({ ...newCar, steering_wheel_side : target.value })
+                    }
+                    >
+                      {
+                        wheel_side.map((item,index) => (
+                          <option key={index} value={item}>{item}</option>
+                        ))
+                      }
+                    </select>
+                    {/* steering_wheel_side end */}
+
+                    {/* climatronic start */}
+                    <span className='input-label'>Klima: </span>
+                    <select
+                    className="input" 
+                    name='climatronic'
+                    required
+                    onChange={({ target }) =>
+                    setNewCar({ ...newCar, climatronic : target.value })
+                    }
+                    >
+                      {
+                        climatronic_options.map((item,index) => (
+                          <option key={index} value={item}>{item}</option>
+                        ))
+                      }
+                    </select>
+                    {/* climatronic end */}
+
+                    {/* color start */}
+                    <span className='input-label'>Boja vozila: </span>
+                    <select
+                    className="input" 
+                    name='color'
+                    required
+                    onChange={({ target }) =>
+                    setNewCar({ ...newCar, color : target.value })
+                    }
+                    >
+                      {
+                        colors.map((item,index) => (
+                          <option key={index} value={item}>{item}</option>
+                        ))
+                      }
+                    </select>
+                    {/* color end */}
+
+                    {/* registered_until start */}
+                    {/* <span className='input-label'>Registrovan do: </span>
+                    <input 
+                    type='date' 
+                    name="registered_until" 
+                    placeholder="Registrovan do" 
+                    // required 
+                    className="input" 
+                    onChange={({ target }) =>
+                    setNewCar({ ...newCar, registered_until : target.value })
+                    }
+                    /> */}
+                    {/* registered_until end */}
+
+                    {/* description start */}
+                    <span className='input-label'>Opis: </span>
                     <textarea 
                     className='input' 
-                    placeholder='Something about car'
+                    required
+                    placeholder='Opis'
                     onChange={({ target }) =>
                     setNewCar({ ...newCar, description : target.value })
                     }
                     ></textarea>
+                    {/* description end */}
 
+                    {/* images start */}
+                    <span className='input-label'>Dodaj slike: </span>
                     {
-                      input.map((i, index) => (
                         <input 
-                        key={index}
-                        type="text" 
-                        placeholder='Image url...' 
+                        type='file' 
+                        multiple
+                        required
+                        placeholder='Dodaj sliku' 
                         name='images' 
                         className="input"
-                        onChange={({target}) => setNewCar(
-                            {
-                                ...newCar,
-                                images: [ 
-                                    ...newCar.images,
-                                    {
-                                        url: target.value
-                                    }
-                                ]
-                            }
-                        )}
+                        onChange={(e) => onInputChange(e)}
                         />
-                      ))
                     }
-                        <button type='button' className="add-btn" onClick={() => setInput([...input, ''])}>
-                          Add another image
-                        </button>
+                    {/* images end */}
 					<button type='submit' className='btn--add'>Add</button>
 				</form>
 			</div>

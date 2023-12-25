@@ -12,14 +12,11 @@ const SingleAuthorCars = () => {
     useEffect(() => {
         const getCars = async () => {
             const {data} = await getAllCars()
-            const authorsCars = data && data.filter((car) => car.author._id === authorId)
-            console.log("AUTHORSCARS: ", authorsCars)
+            const authorsCars = data && data.filter((car) => car.author_id === authorId)
             setCars(authorsCars);
         }
         getCars()
     }, [])
-
-    if(!localStorage.getItem("user")) navigate("/login")
 
 
   return (
@@ -31,7 +28,7 @@ const SingleAuthorCars = () => {
                 cars.map((car,index) => (
                     <Link to={`/cars/${car._id}`} key={index} className='card'>
                         <div className='card__image'>
-                            <img src={ car.images[0].url } />
+                        <img src={`http://localhost:8000/` + car.images[0].path} alt='Car image' />
                         </div>
                         <div className='card__footer'>
                             <h3>{ car.brand + " " + car.model }</h3>

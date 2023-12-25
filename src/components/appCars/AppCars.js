@@ -17,29 +17,23 @@ const AppCars = () => {
         getCars()
     }, [])
 
-    if(!localStorage.getItem("user")) navigate("/login")
-
-
   return (
     <>
-        <h1>Gallery</h1>
+        {/* <h1>Gallery</h1> */}
         <div className='cars-container'>
             {
-                cars && 
+                cars.length &&
                 cars.map((car,index) => (
                     <Link to={`/cars/${car._id}`} key={index} className='card'>
                         <div className='card__image'>
-                            <img src={ car.images.length && car.images[0].url } />
+                            <img src={car.images.length && `http://localhost:8000/` + car.images[0].path} alt='Car image' />
                         </div>
                         <div className='card__footer'>
                             <h3>{ car.brand + " " + car.model }</h3>
                             
                         </div>
-                        <Link to={`/cars/author/${car.author._id}`} className='btn authors-cars'>
-                            All my cars:    { car.author.first_name }
-                        </Link>
                     </Link>
-                ))
+                )) 
             }
         </div>
         <button onClick={() => navigate("/")} class="close btn--back">

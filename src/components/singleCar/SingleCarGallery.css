@@ -1,6 +1,8 @@
 /* Gallery styles start */
 
 .container {
+    /* width: 70%; */
+    border-color: red;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -11,7 +13,7 @@
   .container .card {
     flex: 1;
     transition: all 1s ease-in-out;
-    height: 75vmin;
+    height: 60vmin;
     position: relative;
   }
   .container .card .card__head {
@@ -30,7 +32,7 @@
     white-space: nowrap;
   }
   .container .card:hover {
-    flex-grow: 10;
+    flex-grow: 4;
   }
   .container .card:hover img {
     filter: grayscale(0);

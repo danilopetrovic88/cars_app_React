@@ -12,6 +12,7 @@ import AddNewCar from './components/addNewCar/AddNewCar';
 import { useEffect, useState } from 'react';
 import { getUser, logoutUser } from './services/authService';
 import SingleAuthorCars from './components/singleAuthorCars/SingleAuthorCars';
+import EditSingleCar from './components/editSingleCar/EditSingleCar';
 
 function App() {
 
@@ -33,26 +34,23 @@ function App() {
     }
   }
 
-  console.log("ACTIVE USER/ App.js: ", activeUser)
-
   return (
     <>
       <nav className='navbar'>
       <Link className='navbar__logo' to={"/"}>
-        <h1>Cars Application</h1>
+        <h1>POLOVNJACI</h1>
         <FontAwesomeIcon icon={faCar} />
       </Link>
         <ul className='navbar__items'>
           {
-            localStorage.getItem("user") &&
             <li className='navbar__item'>
-            <Link to={"/cars"}>All Cars</Link>
+            <Link to={"/cars"}>Svi oglasi</Link>
             </li>
           }
           {
             localStorage.getItem("user") && 
             <li className='navbar__item'>
-            <Link to={"/add-new-car"}>Add new car</Link>
+            <Link to={"/add-new-car"}>Postavi oglas</Link>
             </li>
           }
           {
@@ -79,7 +77,8 @@ function App() {
           <Route path='/login' element={<LoginForm />} />
           <Route path="/cars" exact element={<AppCars />} />
           <Route path="/cars/author/:authorId" exact element={<SingleAuthorCars />} />
-          <Route path="/cars/:carId" exact element={<SingleCar />} />
+          <Route path="/cars/:carId" exact element={<SingleCar activeUser={activeUser} />} />
+          <Route path="/cars/edit/:carId" exact element={<EditSingleCar activeUser={activeUser} />} />
           <Route path="/cars/:carId/gallery" exact element={<SingleCarGallery />} />
           <Route path="/add-new-car" exact element={<AddNewCar activeUser={activeUser} />} />
         </Routes>

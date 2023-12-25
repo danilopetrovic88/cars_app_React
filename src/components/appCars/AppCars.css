@@ -1,11 +1,14 @@
 .cars-container {
+    width: 80vw;
+    margin: 2rem auto;
     padding: 1rem;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-gap: 1rem;
 }
 
 .card {
+    width: 20rem;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -17,6 +20,7 @@
 
 .card:hover {
     background: #00299b;
+    transform: scale(1.025);
 }
 
 .card__image {
@@ -41,4 +45,8 @@
 .card__footer h3 {
     color: #eeeeee;
     padding: 1rem;
+}
+
+.btn--back:hover {
+    transform: scale(1.1);
 }

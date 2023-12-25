@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import "./LoginForm.css";
 import { loginUser } from '../../services/authService';
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-const RegisterForm = () => {
+const LoginForm = () => {
 
     const navigate = useNavigate();
 
@@ -12,20 +12,40 @@ const RegisterForm = () => {
         password: ""
       });
 
+      const [errors, setErrors] = useState(null)
+
       const handleSubmitLogin = async (e) => {
         e.preventDefault();
 
         const activeUser = await loginUser(credentialsLogin); 
 
         if(activeUser) {
-         JSON.parse(localStorage.setItem("user", activeUser));
+          localStorage.removeItem("loginError")
+          setErrors(null)
+          JSON.parse(localStorage.setItem("user", activeUser));
         }
+        if(localStorage.getItem("loginError")) {
+          setCredentialsLogin({
+            email: "",
+            password: ""
+          })
+          let err = JSON.parse(localStorage.getItem("loginError"))
+          if(err) setErrors(err)
+          localStorage.removeItem("loginError")
+        }
+
 
         setCredentialsLogin({
           email: "",
           password: ""
-      })
-          navigate("/cars")
+        })
+
+      
+          if(localStorage.getItem("user")) {
+            localStorage.removeItem("loginError")
+            setErrors(null)
+            navigate("/cars")
+          }
       }
 
 
@@ -42,6 +62,7 @@ const RegisterForm = () => {
                     name="email" 
                     placeholder="Email" 
                     required='' 
+                    value={credentialsLogin.email}
                     onChange={({ target }) =>
                     setCredentialsLogin({ ...credentialsLogin, email: target.value })
                     }
@@ -51,11 +72,20 @@ const RegisterForm = () => {
                     name="password" 
                     placeholder="Password" 
                     required='' 
+                    value={credentialsLogin.password}
                     onChange={({ target }) =>
                     setCredentialsLogin({ ...credentialsLogin, password: target.value })
                     }
                     />
 					<button>Login</button>
+
+          {
+            errors && 
+            <>
+              <button className='btn--error'>{ errors.error }</button>
+              <Link className='btn--register' to={"/register"}>Register</Link>
+            </>
+          }
 				</form>
 			</div>
 	</div>
@@ -63,4 +93,4 @@ const RegisterForm = () => {
   )
 }
 
-export default RegisterForm
+export default LoginForm

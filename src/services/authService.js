@@ -9,15 +9,23 @@ const endpoints = {
 }
 
 export const registerUser = async (registerData) => {
-    const {data} = await api.post(endpoints.register,registerData)
-    return data
+    try {
+        const {data} = await api.post(endpoints.register,registerData)
+        return data
+    } catch (error) {
+        return localStorage.setItem("registerError", JSON.stringify(error.response.data))
+    }
 };
 export const loginUser = async (loginData) =>  {
-    const  {data}  = await api.post(endpoints.login,loginData)
+    try {
+        const  {data}  = await api.post(endpoints.login,loginData)
     
-    if(data){
-        return localStorage.setItem("user", JSON.stringify(data))
-    } 
+        if(data){
+            return localStorage.setItem("user", JSON.stringify(data))
+        } 
+    } catch (error) {
+        return localStorage.setItem("loginError", JSON.stringify(error.response.data))
+    }
 };
 
 export const getUser = () => {

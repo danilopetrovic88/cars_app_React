@@ -70,3 +70,28 @@ button:hover{
 .login label{
 	color: #eeeeee;
 }
+
+.btn--error {
+	width: fit-content;
+	background-color: red;
+	cursor: none;
+	pointer-events: none;
+}
+
+.btn--register {
+	width: fit-content;
+	background-color: green;
+	margin: 10px auto;
+	justify-content: center;
+	display: block;
+	color: #fff;
+	padding: 1rem;
+	font-size: 1em;
+	font-weight: bold;
+	margin-top: 20px;
+	outline: none;
+	border: none;
+	border-radius: 5px;
+	transition: .2s ease-in;
+	cursor: pointer;
+}

@@ -47,3 +47,17 @@
 .navbar__item a:hover {
   color: #00299b;
 }
+
+@media (max-width: 430px) {
+  .navbar {
+    justify-content: center;
+  }
+
+  .navbar__items {
+    width: 100vw;
+  }
+
+  .navbar__logo {
+    display: none;
+  }
+}
