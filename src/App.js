@@ -38,13 +38,13 @@ function App() {
     <>
       <nav className='navbar'>
       <Link className='navbar__logo' to={"/"}>
-        <h1>POLOVNJACI</h1>
+        <h1>mojpolovnjak.com</h1>
         <FontAwesomeIcon icon={faCar} />
       </Link>
         <ul className='navbar__items'>
           {
             <li className='navbar__item'>
-            <Link to={"/cars"}>Svi oglasi</Link>
+            <Link to={"/cars"}>Pogledaj oglase</Link>
             </li>
           }
           {

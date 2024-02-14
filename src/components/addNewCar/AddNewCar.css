@@ -38,6 +38,10 @@
     margin: 0 80px; 
     color: #eeeeee;
 }
+
+option {
+	color: #444;
+}
 label{
 	color: #fff;
 	font-size: 2.3em;

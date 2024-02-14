@@ -32,13 +32,6 @@ const SingleCar = ({ activeUser }) => {
         <div className="flip-card">
 
           <div className="card-front">
-            <figure>
-              <div className="img-bg"></div>
-              <figcaption>{car.brand + " " + car.model}</figcaption>
-            </figure>
-
-
-
             <ul className='single-car__list'>
               <div>
                 <li className='single-car__list-item'>Marka: {car.brand}</li>
@@ -70,7 +63,7 @@ const SingleCar = ({ activeUser }) => {
 
                 <div className='btn-container'>
                   <Link to={`/cars/${carId}/gallery`} className='btn--card btn--card-responsive'>Pogledaj slike</Link>
-                  <Link className='btn--card btn--card-responsive' to={`/cars/author/${car.author_id}`}>Moji oglasi</Link>
+                  <Link className='btn--card btn--card-responsive' to={`/cars/author/${car.author_id}`}>Svi oglasi</Link>
                   <button className='btn btn--phone'>{ car.phone }</button>
                 </div>
 

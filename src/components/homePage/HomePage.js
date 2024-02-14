@@ -4,7 +4,7 @@ import "./HomePage.css";
 const HomePage = ({ activeUser }) => {
   return (
     <div className='home-page'>
-        <h1>Dobrodošli na polovnjake.com! Ukoliko želite da postavite oglas, prijavite se!</h1>
+        <h1>Dobrodošli na mojpolovnjak.com! Registrujte se i postavite svoj oglas!</h1>
     </div>
   )
 }

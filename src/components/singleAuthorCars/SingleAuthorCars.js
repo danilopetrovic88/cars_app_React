@@ -18,10 +18,13 @@ const SingleAuthorCars = () => {
         getCars()
     }, [])
 
+    const author = cars.filter((car) => car.author_id === authorId)
+
+    console.log("author cars: ", author)
 
   return (
     <>
-        <h1>Gallery</h1>
+        <h1>Pogledaj sve oglase prodavca { author.length && author[0].author } </h1>
         <div className='cars-container'>
             {
                 cars && 
@@ -32,7 +35,6 @@ const SingleAuthorCars = () => {
                         </div>
                         <div className='card__footer'>
                             <h3>{ car.brand + " " + car.model }</h3>
-                            
                         </div>
                     </Link>
                 ))

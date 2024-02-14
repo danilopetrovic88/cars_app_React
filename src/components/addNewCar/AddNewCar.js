@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import "./AddNewCar.css";
 import { useNavigate } from 'react-router';
 import { addNewCarService } from '../../services/addNewCarService';
+import { carBrands } from '../../services/carBrands';
 
 const AddNewCar = ({ activeUser }) => {
   const fuelOptions = ["","petrol", "diesel", "electric", "gas", "other"];
@@ -20,7 +21,17 @@ const AddNewCar = ({ activeUser }) => {
     years.push(i);
 }
 
+  useEffect(() => {
+    setBrands(carBrands)
+  }, [])
+
 const navigate = useNavigate();
+
+const [brands, setBrands] = useState([""])
+const [brand, setBrand] = useState("");
+
+
+const filteredBrand = brands.filter(item => item.brand === brand);
 
 const [newCar, setNewCar] = useState({
     brand : "",
@@ -102,7 +113,18 @@ const handleSubmit = async (e) => {
   navigate("/cars")
 }
 
+if(brands[0] !== "") {
+  brands.unshift("")
+}
+
+if(filteredBrand[0] && filteredBrand[0].models[0] !== "") {
+  filteredBrand[0].models.unshift("")
+}
+
 if(!localStorage.getItem("user")) navigate("/login")
+
+console.log("BRANDS: ", newCar)
+
 
   return (
     <div className='add-car-form-container'>
@@ -111,32 +133,47 @@ if(!localStorage.getItem("user")) navigate("/login")
 
 			<div className="add-car">
 				<form onSubmit={handleSubmit} encType='multipart/form-data'>
-                    <span className='input-label'>Marka: </span>
-					          <input 
-                    type="text" 
-                    name="brand" 
-                    placeholder="Marka" 
-                    required
-                    className="input" 
-                    onChange={({ target }) =>
-                    setNewCar({ ...newCar, brand : target.value })
-                    }
-                    />
-                    {/* brand end */}
 
-                    {/* model start */}
-                    <span className='input-label'>Model: </span>
-                    <input 
-                    type="text" 
-                    name="model" 
-                    placeholder="Model" 
-                    required
+                    {/* brand list start */}
+                    <span className='input-label'>Brand: </span>
+                    <select
                     className="input" 
-                    onChange={({ target }) =>
-                    setNewCar({ ...newCar, model : target.value })
+                    required
+                    name='brand'
+                    onChange={({ target }) => {
+                      setBrand(target.value)
+                      setNewCar({ ...newCar, brand : target.value })
                     }
-                    />
-                    {/* model end */}
+                    }
+                    >
+                      {
+                        brands && brands.map((brand,index) => (
+                          <option key={index} value={brand.brand}>{brand.brand}</option>
+                        ))
+                      }
+                    </select>
+                    {/* brand list end */}
+
+                    {/* models list start */}
+                    <span className='input-label'>Model: </span>
+                    <select
+                    className="input" 
+                    required
+                    name='model'
+                    onChange={({ target }) => {
+                      setNewCar({ ...newCar, model : target.value })
+                    }
+                    
+                    }
+                    >
+                      {
+                        filteredBrand[0] && filteredBrand[0].models.map((model,index) => (
+                          <option key={index} value={model}>{model}</option>
+                        ))
+                      }
+                    </select>
+                    {/* models list end */}
+
 
                     {/* year start */}
                     <span className='input-label'>Godina proizvodnje: </span>
