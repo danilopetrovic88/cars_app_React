@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import "./SingleCarGallery.css";
+import "./SingleCarGallery.scss";
 import { useNavigate, useParams } from 'react-router';
 import { getSingleCar } from '../../services/carService';
 

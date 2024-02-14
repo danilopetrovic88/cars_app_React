@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import "../addNewCar/AddNewCar.css";
+import "../addNewCar/AddNewCar.scss";
 import { useNavigate, useParams } from 'react-router';
 import { EditCar } from '../../services/addNewCarService';
 import { getSingleCar } from '../../services/carService';

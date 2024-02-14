@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import "./AppCars.css";
+import "./AppCars.scss";
 import { getAllCars } from '../../services/carService';
 import { Link, useNavigate } from 'react-router-dom';
 

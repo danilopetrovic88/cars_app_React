@@ -1,4 +1,4 @@
-import './App.css';
+import './App.scss';
 import { Link, Switch, Route, Routes, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import AppCars from './components/appCars/AppCars';
