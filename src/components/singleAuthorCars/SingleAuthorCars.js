@@ -20,8 +20,6 @@ const SingleAuthorCars = () => {
 
     const author = cars.filter((car) => car.author_id === authorId)
 
-    console.log("author cars: ", author)
-
   return (
     <>
         <h1>Pogledaj sve oglase prodavca { author.length && author[0].author } </h1>

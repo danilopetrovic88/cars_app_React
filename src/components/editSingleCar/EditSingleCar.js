@@ -64,14 +64,7 @@ useEffect(() => {
 
 const navigate = useNavigate();
 
-const [carImages, setCarImages] = useState(null)
-
 const form = new FormData();
-
-const onInputChange = (e) => {
-  const arr = Array.from(e.target.files)
-    setCarImages(arr)
-}
 
 const [newCar, setNewCar] = useState({})
 
@@ -104,13 +97,6 @@ const handleSubmit = async (e) => {
   form.set("phone", activeUser.phone);
   form.set("city", activeUser.city);
   form.set("author_id", activeUser._id);
-
-  if(carImages !== null) {
-    for (let i = 0; i < carImages.length; i++) {
-      const file = carImages[i];
-      form.set("images", file)
-    }
-  }
   
 
   const data = await EditCar(form, carId)
@@ -424,20 +410,6 @@ if(!localStorage.getItem("user")) navigate("/login")
                       }
                     </select>
                     {/* color end */}
-
-                    {/* registered_until start */}
-                    {/* <span className='input-label'>Registrovan do: </span>
-                    <input 
-                    type='date' 
-                    name="registered_until" 
-                    placeholder="Registrovan do" 
-                    // required 
-                    className="input" 
-                    onChange={({ target }) =>
-                    setNewCar({ ...newCar, registered_until : target.value })
-                    }
-                    /> */}
-                    {/* registered_until end */}
 
                     {/* description start */}
                     <span className='input-label'>Opis: </span>

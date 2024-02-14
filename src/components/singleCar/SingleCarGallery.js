@@ -21,8 +21,6 @@ const SingleCarGallery = () => {
         getCar();
     }, [carId])
 
-    // if(!localStorage.getItem("user")) navigate("/login")
-
   return (
     <>
 

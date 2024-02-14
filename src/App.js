@@ -1,5 +1,5 @@
 import './App.scss';
-import { Link, Switch, Route, Routes, useNavigate } from 'react-router-dom';
+import { Link, Route, Routes, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import AppCars from './components/appCars/AppCars';
 import SingleCar from './components/singleCar/SingleCar';

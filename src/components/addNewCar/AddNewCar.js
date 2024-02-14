@@ -123,8 +123,6 @@ if(filteredBrand[0] && filteredBrand[0].models[0] !== "") {
 
 if(!localStorage.getItem("user")) navigate("/login")
 
-console.log("BRANDS: ", newCar)
-
 
   return (
     <div className='add-car-form-container'>
@@ -428,20 +426,6 @@ console.log("BRANDS: ", newCar)
                       }
                     </select>
                     {/* color end */}
-
-                    {/* registered_until start */}
-                    {/* <span className='input-label'>Registrovan do: </span>
-                    <input 
-                    type='date' 
-                    name="registered_until" 
-                    placeholder="Registrovan do" 
-                    // required 
-                    className="input" 
-                    onChange={({ target }) =>
-                    setNewCar({ ...newCar, registered_until : target.value })
-                    }
-                    /> */}
-                    {/* registered_until end */}
 
                     {/* description start */}
                     <span className='input-label'>Opis: </span>
